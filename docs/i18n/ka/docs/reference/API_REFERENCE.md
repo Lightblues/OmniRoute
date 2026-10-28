@@ -871,13 +871,17 @@ Exa და Tavily კითხულობენ პროვაიდერი�
 
 ყოველთვის იმარჯვებს ზოგადი ველები: `query`, `max_results`, `filters` (დომენები), `country` და `search_type` დან მიღებული თემა. Exa-ზე, `search_type: "news"` ინახავს `category: "news"`. ტავილი ასევე იღებს `search_type: "finance"` (`topic: "finance"`).
 
+Firecrawl ძიების ღირებულება აღირიცხება 10 დაბრუნებული შედეგის დაწყებულ ბლოკზე, 0,002$ (2 კრედიტი) ბლოკი და მინიმუმ ერთი ბლოკი თითო ზარზე ( [Firecrawl ბილინგი](https://docs.firecrawl.dev/billing) ): 11 შედეგი ღირს 0,004$.
+
 ზოგადი `time_range` ახლა აღწევს ორივე პროვაიდერს: Exa იღებს `startPublishedDate` (ISO დროის ნიშანს) და Tavily იღებს `start_date` (`YYYY-MM-DD`). აშკარა თარიღი `provider_options` ში აჭარბებს შედგენილ თარიღს.
 
 Exa შედეგები ინახავს `id`, `highlight_scores`, `summary`, `subpages`, `entities` და `extras` `provider_raw` ში. შედეგების შენარჩუნება `images` და `favicon`.
 
+Linkup-ის ძიების ღირებულება აღირიცხება $0,005 `depth` `fast` სთვის და `standard` სთვის და $0,05-ად `deep` სთვის ( [Linkup pricing](https://docs.linkup.so/pages/documentation/development/pricing) ), მიუხედავად იმისა, `depth` მოდის `provider_options` დან თუ კავშირის პარამეტრებიდან.
+
 Exa `type: "lite"` (Exa 3.0) იღებს ველების უფრო მცირე კომპლექტს და უარყოფს მთელ მოთხოვნას, როდესაც დაყენებულია ნებისმიერი სხვა ველი. Lite-ისთვის, `additionalQueries`, `systemPrompt` და ყველა `contents` კლავიატურა `text` და `highlights` გარდა იშლება ზარის წინ. მოძველებული `subpages`, `subpageTarget`, `highlights.numSentences` და `highlights.highlightsPerUrl` აღარ არის გადაგზავნილი.
 
-ხარჯების აღრიცხვა არის ბინა რეესტრი `costPerQuery`, გარდა Exa-ისა, რომელიც მიჰყვება Exa-ს საკუთარ ფასებს: $0,007 თითო ზარზე `auto` (და მემკვიდრეობითი `fast`) ან $0,004 `lite` (და მემკვიდრე `instant`), რომელიც მოიცავს 10 შედეგს; $0,001 ყოველი შემდგომი შედეგისთვის; და $0,001 თითო დაბრუნებულ შედეგზე, როდესაც `contents.summary` დაყენებულია. Tavily ანაზღაურებს `search_depth: "advanced"` მეტი კრედიტით თითო ზარზე და ეს განსხვავება არ აისახება `usage.search_cost_usd` ში.
+ხარჯების აღრიცხვა არის ბინა რეესტრი `costPerQuery`, გარდა Exa-ისა, რომელიც მიჰყვება Exa-ს საკუთარ ფასებს: $0,007 თითო ზარზე `auto` (და მემკვიდრეობითი `fast`) ან $0,004 `lite` (და მემკვიდრე `instant`), რომელიც მოიცავს 10 შედეგს; $0,001 ყოველი შემდგომი შედეგისთვის; და $0,001 თითო დაბრუნებულ შედეგზე, როდესაც `contents.summary` დაყენებულია. Tavily აღირიცხება 1 კრედიტით (0,008$) `search_depth` `basic`, `fast` და `ultra-fast`, და 2 კრედიტით (0,016$) `advanced` ( [Tavily API კრედიტები](https://docs.tavily.com/documentation/api-credits) ). ზარი `auto_parameters: true` ით, რომელსაც Tavily განაახლებს გაფართოებულზე, კვლავ ჩაწერილია 1 კრედიტით.
 
 ---
 

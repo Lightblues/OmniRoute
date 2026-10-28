@@ -822,13 +822,17 @@ Exa आणि Tavily ने नेमस्पेस असलेल्या �
 
 जेनेरिक फील्ड नेहमी जिंकतात: `query`, `max_results`, `filters` (डोमेन), `country` आणि `search_type` वरून घेतलेला विषय. Exa वर, `search_type: "news"` `category: "news"` ठेवते. Tavily `search_type: "finance"` (`topic: "finance"`) देखील स्वीकारते.
 
+फायरक्रॉल शोध खर्च प्रति स्टार्ट ब्लॉक 10 रिटर्न केलेल्या परिणामांची नोंद केली जाते, $0.002 (2 क्रेडिट्स) एक ब्लॉक आणि किमान एक ब्लॉक प्रति कॉल ( [फायरक्रॉल बिलिंग](https://docs.firecrawl.dev/billing) ): 11 परिणामांची किंमत $0.004 आहे.
+
 जेनेरिक `time_range` आता दोन्ही प्रदात्यांपर्यंत पोहोचते: Exa ला `startPublishedDate` (ISO टाइमस्टॅम्प) आणि Tavily ला `start_date` (`YYYY-MM-DD`) मिळते. `provider_options` मधील स्पष्ट तारीख मॅप केलेली तारीख ओव्हरराइड करते.
 
 Exa परिणाम `id`, `highlight_scores`, `summary`, `subpages`, `entities` आणि `extras` `provider_raw` मध्ये ठेवतात. Tavily परिणाम `images` आणि `favicon` ठेवतात.
 
+लिंकअप शोध खर्च `depth` `fast` आणि `standard` साठी $0.005 आणि `deep` ( [Linkup pricing](https://docs.linkup.so/pages/documentation/development/pricing) ) साठी $0.05 वर रेकॉर्ड केला जातो, `depth` `provider_options` किंवा कनेक्शन सेटिंग्जमधून आलेला असला तरीही.
+
 Exa `type: "lite"` (Exa 3.0) फील्डचा एक छोटा संच स्वीकारते आणि इतर फील्ड सेट केल्यावर संपूर्ण विनंती नाकारते. lite साठी, `additionalQueries`, `systemPrompt` आणि `text` आणि `highlights` वगळता प्रत्येक `contents` की कॉल करण्यापूर्वी सोडली जाते. बहिष्कृत `subpages`, `subpageTarget`, `highlights.numSentences` आणि `highlights.highlightsPerUrl` यापुढे फॉरवर्ड केले जाणार नाहीत.
 
-कॉस्ट अकाऊंटिंग ही फ्लॅट रेजिस्ट्री `costPerQuery` आहे, Exa व्यतिरिक्त, जी Exa च्या स्वतःच्या किंमतींचे अनुसरण करते: `auto` (आणि वारसा `fast`) साठी $0.007 प्रति कॉल किंवा `lite` (आणि वारसा `instant`) साठी $0.004, 10 परिणामांचा समावेश आहे; प्रत्येक पुढील निकालासाठी $0.001; आणि $0.001 प्रति परत केलेला परिणाम `contents.summary` सेट केल्यावर. Tavily प्रति कॉल अधिक क्रेडिट्सवर `search_depth: "advanced"` बिल करते आणि तो फरक `usage.search_cost_usd` मध्ये दिसून येत नाही.
+कॉस्ट अकाऊंटिंग ही फ्लॅट रेजिस्ट्री `costPerQuery` आहे, Exa व्यतिरिक्त, जी Exa च्या स्वतःच्या किंमतींचे अनुसरण करते: `auto` (आणि वारसा `fast`) साठी $0.007 प्रति कॉल किंवा `lite` (आणि वारसा `instant`) साठी $0.004, 10 परिणामांचा समावेश आहे; प्रत्येक पुढील निकालासाठी $0.001; आणि $0.001 प्रति परत केलेला परिणाम `contents.summary` सेट केल्यावर. Tavily `search_depth` `basic`, `fast` आणि `ultra-fast` साठी 1 क्रेडिट ($0.008) आणि `advanced` ( [Tavily API क्रेडिट्स](https://docs.tavily.com/documentation/api-credits) ) साठी 2 क्रेडिट ($0.016) वर नोंदवले गेले आहे. `auto_parameters: true` सह कॉल जो Tavily प्रगत वर अपग्रेड करतो तो अजूनही 1 क्रेडिटवर रेकॉर्ड केला जातो.
 
 ---
 

@@ -872,13 +872,17 @@ Exa និង Tavily អានវាលជាក់លាក់របស់អ�
 
 វាលទូទៅតែងតែឈ្នះ៖ `query`, `max_results`, `filters` (ដែន), `country` និងប្រធានបទដែលបានមកពី `search_type`។ នៅលើ Exa, `search_type: "news"` រក្សា `category: "news"`។ Tavily ក៏ទទួលយក `search_type: "finance"` (`topic: "finance"`) ផងដែរ។
 
+ការចំណាយលើការស្វែងរក Firecrawl ត្រូវបានកត់ត្រាក្នុងមួយប្លុកដែលបានចាប់ផ្តើមនៃលទ្ធផល 10 ដែលត្រឡប់មកវិញនៅ $0.002 (2 ក្រេឌីត) ក្នុងមួយប្លុក និងយ៉ាងហោចណាស់មួយប្លុកក្នុងមួយការហៅ ( [ការចេញវិក្កយបត្រ Firecrawl](https://docs.firecrawl.dev/billing) ): 11 លទ្ធផលមានតម្លៃ $0.004 ។
+
 `time_range` ទូទៅឥឡូវនេះទៅដល់អ្នកផ្តល់សេវាទាំងពីរ៖ Exa ទទួលបាន `startPublishedDate` (ISO timestamp) និង Tavily ទទួលបាន `start_date` (`YYYY-MM-DD`)។ កាលបរិច្ឆេទច្បាស់លាស់នៅក្នុង `provider_options` បដិសេធការគូសផែនទី។
 
 លទ្ធផល Exa រក្សា `id`, `highlight_scores`, `summary`, `subpages`, `entities` និង `extras` ក្នុង `provider_raw`។ លទ្ធផល Tavily រក្សា `images` និង `favicon`។
 
+តម្លៃនៃការស្វែងរកតំណភ្ជាប់ត្រូវបានកត់ត្រានៅ $0.005 សម្រាប់ `depth` `fast` និង `standard` និង $0.05 សម្រាប់ `deep` ( [តម្លៃភ្ជាប់](https://docs.linkup.so/pages/documentation/development/pricing) ) ថាតើ `depth` មកពី `provider_options` ឬការកំណត់នៃការតភ្ជាប់។
+
 Exa `type: "lite"` (Exa 3.0) ទទួលយកសំណុំវាលតូចជាង ហើយបដិសេធសំណើទាំងមូលនៅពេលដែលវាលផ្សេងទៀតត្រូវបានកំណត់។ សម្រាប់ lite, `additionalQueries`, `systemPrompt` និងរាល់ `contents` key លើកលែងតែ `text` និង `highlights` ត្រូវបានទម្លាក់មុនពេលហៅ។ `subpages`, `subpageTarget`, `highlights.numSentences` និង `highlights.highlightsPerUrl` ដែលបានបដិសេធមិនត្រូវបានបញ្ជូនបន្តទៀតទេ។
 
-គណនេយ្យតម្លៃគឺជា `costPerQuery` ឈ្មោះផ្ទះល្វែង លើកលែងតែ Exa ដែលធ្វើតាមតម្លៃផ្ទាល់ខ្លួនរបស់ Exa៖ 0.007 ដុល្លារក្នុងមួយការហៅសម្រាប់ `auto` (និង `fast` កេរ្តិ៍ដំណែល) ឬ 0.004 ដុល្លារសម្រាប់ `lite` (និង `instant` កេរ្តិ៍ដំណែល) គ្របដណ្តប់លទ្ធផល 10 ។ $0.001 សម្រាប់លទ្ធផលបន្ថែមនីមួយៗ; និង $0.001 ក្នុងមួយលទ្ធផលត្រឡប់មកវិញនៅពេលដែល `contents.summary` ត្រូវបានកំណត់។ Tavily ចេញវិក្កយបត្រ `search_depth: "advanced"` នៅក្រេឌីតកាន់តែច្រើនក្នុងមួយការហៅទូរសព្ទ ហើយភាពខុសគ្នានោះមិនត្រូវបានឆ្លុះបញ្ចាំងនៅក្នុង `usage.search_cost_usd` ទេ។
+គណនេយ្យតម្លៃគឺជា `costPerQuery` ឈ្មោះផ្ទះល្វែង លើកលែងតែ Exa ដែលធ្វើតាមតម្លៃផ្ទាល់ខ្លួនរបស់ Exa៖ 0.007 ដុល្លារក្នុងមួយការហៅសម្រាប់ `auto` (និង `fast` កេរ្តិ៍ដំណែល) ឬ 0.004 ដុល្លារសម្រាប់ `lite` (និង `instant` កេរ្តិ៍ដំណែល) គ្របដណ្តប់លទ្ធផល 10 ។ $0.001 សម្រាប់លទ្ធផលបន្ថែមនីមួយៗ; និង $0.001 ក្នុងមួយលទ្ធផលត្រឡប់មកវិញនៅពេលដែល `contents.summary` ត្រូវបានកំណត់។ Tavily ត្រូវបានកត់ត្រាក្នុង 1 ក្រេឌីត ($0.008) សម្រាប់ `search_depth` `basic`, `fast` និង `ultra-fast`, និង 2 credits ($0.016) សម្រាប់ `advanced` ( [Tavily API credits](https://docs.tavily.com/documentation/api-credits) )។ ការហៅទូរសព្ទជាមួយ `auto_parameters: true` ដែល Tavily ដំឡើងកំណែទៅកម្រិតខ្ពស់នៅតែត្រូវបានកត់ត្រាក្នុង 1 ក្រេឌីត។
 
 ---
 

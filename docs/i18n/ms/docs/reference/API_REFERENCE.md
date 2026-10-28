@@ -872,13 +872,17 @@ Exa dan Tavily membaca medan khusus pembekal daripada beg ruang nama: `provider_
 
 Medan generik sentiasa menang: `query`, `max_results`, `filters` (domain), `country` dan topik yang diperoleh daripada `search_type`. Pada Exa, `search_type: "news"` mengekalkan `category: "news"`. Tavily juga menerima `search_type: "finance"` (`topic: "finance"`).
 
+Kos carian Firecrawl direkodkan setiap blok permulaan bagi 10 hasil yang dikembalikan, pada $0.002 (2 kredit) satu blok dan sekurang-kurangnya satu blok setiap panggilan ( [Pengebilan Firecrawl](https://docs.firecrawl.dev/billing) ): 11 hasil kos $0.004.
+
 `time_range` generik kini mencapai kedua-dua penyedia: Exa mendapat `startPublishedDate` ( cap waktu ISO ) dan Tavily mendapat `start_date` (`YYYY-MM-DD`). Tarikh eksplisit dalam `provider_options` mengatasi tarikh yang dipetakan.
 
 Keputusan Exa mengekalkan `id`, `highlight_scores`, `summary`, `subpages`, `entities` dan `extras` dalam `provider_raw`. Hasil tavily kekalkan `images` dan `favicon`.
 
+Kos carian pautan direkodkan pada $0.005 untuk `depth` `fast` dan `standard` dan $0.05 untuk `deep` ( [Harga pautan](https://docs.linkup.so/pages/documentation/development/pricing) ), sama ada `depth` datang daripada `provider_options` atau tetapan sambungan.
+
 Exa `type: "lite"` (Exa 3.0) menerima set medan yang lebih kecil dan menolak keseluruhan permintaan apabila mana-mana medan lain ditetapkan. Untuk lite, `additionalQueries`, `systemPrompt` dan setiap kekunci `contents` kecuali `text` dan `highlights` digugurkan sebelum panggilan. `subpages`, `subpageTarget`, `highlights.numSentences` dan `highlights.highlightsPerUrl` yang ditamatkan tidak dimajukan lagi.
 
-Perakaunan kos ialah `costPerQuery` pendaftaran rata , kecuali untuk Exa, yang mengikut harga Exa sendiri: $0.007 setiap panggilan untuk `auto` (dan `fast` legasi ) atau $0.004 untuk `lite` (dan `instant` warisan ), meliputi 10 keputusan; $0.001 untuk setiap keputusan selanjutnya; dan $0.001 setiap hasil yang dikembalikan apabila `contents.summary` ditetapkan. Tavily mengebil `search_depth: "advanced"` pada lebih banyak kredit setiap panggilan, dan perbezaan itu tidak ditunjukkan dalam `usage.search_cost_usd`.
+Perakaunan kos ialah `costPerQuery` pendaftaran rata , kecuali untuk Exa, yang mengikut harga Exa sendiri: $0.007 setiap panggilan untuk `auto` (dan `fast` legasi ) atau $0.004 untuk `lite` (dan `instant` warisan ), meliputi 10 keputusan; $0.001 untuk setiap keputusan selanjutnya; dan $0.001 setiap hasil yang dikembalikan apabila `contents.summary` ditetapkan. Tavily direkodkan pada 1 kredit ($0.008) untuk `search_depth` `basic`, `fast` dan `ultra-fast`, dan 2 kredit ($0.016) untuk `advanced` ( [Tavily API credits](https://docs.tavily.com/documentation/api-credits) ). Panggilan dengan `auto_parameters: true` yang Tavily naik taraf kepada lanjutan masih direkodkan pada 1 kredit.
 
 ---
 

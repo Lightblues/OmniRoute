@@ -804,13 +804,17 @@ Exa ve Tavily, sağlayıcıya özel alanları ad alanlı bir paketten okur: `pro
 
 Genel alanlar her zaman kazanır: `query`, `max_results`, `filters` (domainler), `country` ve `search_type` türetilen konu. Exa'da `search_type: "news"`, `category: "news"` değerini korur. Tavily ayrıca `search_type: "finance"` (`topic: "finance"`) de kabul eder.
 
+Firecrawl arama maliyeti, döndürülen 10 sonuçtan oluşan başlatılan blok başına, blok başına 0,002 USD (2 kredi) ve çağrı başına en az bir blok ( [Firecrawl faturalandırması](https://docs.firecrawl.dev/billing) ) olarak kaydedilir: 11 sonucun maliyeti 0,004 USD'dir.
+
 Jenerik `time_range` artık her iki sağlayıcıya da ulaşıyor: Exa `startPublishedDate` (ISO zaman damgası) alıyor ve Tavily `start_date` (`YYYY-MM-DD`) alıyor. `provider_options` açık bir tarih, eşlenen tarihi geçersiz kılar.
 
 Exa sonuçları `id`, `highlight_scores`, `summary`, `subpages`, `entities` ve `extras` `provider_raw` tutar. Tavily sonuçları `images` ve `favicon` korur.
 
+`depth` `provider_options` veya bağlantı ayarlarından gelmesine bakılmaksızın, bağlantı arama maliyeti `depth` `fast` ve `standard` için 0,005 ABD doları ve `deep` ( [Bağlantı fiyatlandırması](https://docs.linkup.so/pages/documentation/development/pricing) ) için 0,05 ABD doları olarak kaydedilir.
+
 Exa `type: "lite"` (Exa 3.0) daha küçük bir alan kümesini kabul eder ve başka bir alan ayarlandığında isteğin tamamını reddeder. Lite için `additionalQueries`, `systemPrompt` ve `text` ile `highlights` dışındaki tüm `contents` tuşları çağrıdan önce bırakılır. Kullanımdan kaldırılan `subpages`, `subpageTarget`, `highlights.numSentences` ve `highlights.highlightsPerUrl` artık iletilmiyor.
 
-Maliyet muhasebesi, Exa hariç, Exa'nın kendi fiyatlandırmasını izleyen düz kayıt `costPerQuery`: 10 sonucu kapsayan `auto` (ve eski `fast`) için çağrı başına 0,007 ABD doları veya `lite` (ve eski `instant`) için 0,004 ABD doları; Sonraki her sonuç için 0,001 ABD doları; ve `contents.summary` ayarlandığında döndürülen sonuç başına 0,001 ABD doları. Tavily, `search_depth: "advanced"` arama başına daha fazla krediyle faturalandırıyor ve bu fark `usage.search_cost_usd` yansıtılmıyor.
+Maliyet muhasebesi, Exa hariç, Exa'nın kendi fiyatlandırmasını izleyen düz kayıt `costPerQuery`: 10 sonucu kapsayan `auto` (ve eski `fast`) için çağrı başına 0,007 ABD doları veya `lite` (ve eski `instant`) için 0,004 ABD doları; Sonraki her sonuç için 0,001 ABD doları; ve `contents.summary` ayarlandığında döndürülen sonuç başına 0,001 ABD doları. Tavily `search_depth` `basic`, `fast` ve `ultra-fast` için 1 kredi (0,008 ABD doları) ve `advanced` ( [Tavily API kredileri](https://docs.tavily.com/documentation/api-credits) ) için 2 kredi (0,016 ABD doları) olarak kaydedilmiştir. Tavily'nin gelişmiş seviyeye yükselttiği `auto_parameters: true` ile yapılan bir çağrı hâlâ 1 kredi olarak kaydediliyor.
 
 ---
 

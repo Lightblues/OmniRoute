@@ -842,13 +842,17 @@ Web/search ప్రొవైడర్ సంగ్రహణ (తవిలీ, �
 
 జెనరిక్ ఫీల్డ్లు ఎల్లప్పుడూ గెలుస్తాయి: `query`, `max_results`, `filters` (డొమైన్లు), `country` మరియు `search_type` నుండి తీసుకోబడిన అంశం. Exaలో, `search_type: "news"` `category: "news"` ఉంచుతుంది. Tavily కూడా `search_type: "finance"` (`topic: "finance"`) అంగీకరిస్తుంది.
 
+ఫైర్క్రాల్ శోధన ధర 10 రిటర్న్ చేసిన ఫలితాల యొక్క ప్రారంభ బ్లాక్కు నమోదు చేయబడుతుంది, ఒక బ్లాక్కి $0.002 (2 క్రెడిట్లు) మరియు ప్రతి కాల్కి కనీసం ఒక బ్లాక్ ( [ఫైర్క్రాల్ బిల్లింగ్](https://docs.firecrawl.dev/billing) ): 11 ఫలితాల ధర $0.004.
+
 జెనరిక్ `time_range` ఇప్పుడు రెండు ప్రొవైడర్లను చేరుకుంటుంది: Exa `startPublishedDate` (ISO టైమ్స్టాంప్) మరియు Tavily `start_date` (`YYYY-MM-DD`)ని పొందుతుంది. `provider_options` లో స్పష్టమైన తేదీ మ్యాప్ చేయబడిన తేదీని భర్తీ చేస్తుంది.
 
 Exa ఫలితాలు `id`, `highlight_scores`, `summary`, `subpages`, `entities` మరియు `extras` `provider_raw` లో ఉంచుతాయి. Tavily ఫలితాలు `images` మరియు `favicon` ఉంచుతాయి.
 
+లింక్అప్ శోధన ధర `depth` `fast` మరియు `standard` కోసం $0.005 మరియు `deep` కోసం $0.05 ( [Linkup ప్రైసింగ్](https://docs.linkup.so/pages/documentation/development/pricing) ), `depth` `provider_options` లేదా కనెక్షన్ సెట్టింగ్ల నుండి వచ్చినా నమోదు చేయబడుతుంది.
+
 Exa `type: "lite"` (Exa 3.0) చిన్న ఫీల్డ్లను అంగీకరిస్తుంది మరియు ఏదైనా ఇతర ఫీల్డ్ సెట్ చేయబడినప్పుడు మొత్తం అభ్యర్థనను తిరస్కరిస్తుంది. లైట్ కోసం, `additionalQueries`, `systemPrompt` మరియు `text` మరియు `highlights` మినహా ప్రతి `contents` కీ కాల్కు ముందు డ్రాప్ చేయబడతాయి. నిలిపివేయబడిన `subpages`, `subpageTarget`, `highlights.numSentences` మరియు `highlights.highlightsPerUrl` ఇకపై ఫార్వార్డ్ చేయబడవు.
 
-కాస్ట్ అకౌంటింగ్ అనేది ఫ్లాట్ రిజిస్ట్రీ `costPerQuery`, ఇది Exa యొక్క స్వంత ధరను అనుసరించే Exa మినహా: `auto` (మరియు లెగసీ `fast`) కోసం ప్రతి కాల్కు $0.007 లేదా `lite` (మరియు లెగసీ `instant`) కోసం $0.004 10 ఫలితాలను కవర్ చేస్తుంది; ప్రతి తదుపరి ఫలితం కోసం $0.001; మరియు `contents.summary` సెట్ చేసినప్పుడు ప్రతి ఫలితానికి $0.001. Tavily ప్రతి కాల్కు ఎక్కువ క్రెడిట్ల వద్ద `search_depth: "advanced"` బిల్ చేస్తుంది మరియు ఆ వ్యత్యాసం `usage.search_cost_usd` లో ప్రతిబింబించదు.
+కాస్ట్ అకౌంటింగ్ అనేది ఫ్లాట్ రిజిస్ట్రీ `costPerQuery`, ఇది Exa యొక్క స్వంత ధరను అనుసరించే Exa మినహా: `auto` (మరియు లెగసీ `fast`) కోసం ప్రతి కాల్కు $0.007 లేదా `lite` (మరియు లెగసీ `instant`) కోసం $0.004 10 ఫలితాలను కవర్ చేస్తుంది; ప్రతి తదుపరి ఫలితం కోసం $0.001; మరియు `contents.summary` సెట్ చేసినప్పుడు ప్రతి ఫలితానికి $0.001. Tavily `search_depth` `basic`, `fast` మరియు `ultra-fast` కోసం 1 క్రెడిట్ ($0.008), మరియు `advanced` ( [Tavily API క్రెడిట్లు](https://docs.tavily.com/documentation/api-credits) ) కోసం 2 క్రెడిట్లు ($0.016) వద్ద రికార్డ్ చేయబడింది. Tavily అధునాతనంగా అప్గ్రేడ్ చేసిన `auto_parameters: true` తో కాల్ ఇప్పటికీ 1 క్రెడిట్లో రికార్డ్ చేయబడింది.
 
 ---
 

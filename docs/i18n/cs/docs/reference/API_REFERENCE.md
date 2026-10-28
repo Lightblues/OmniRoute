@@ -853,13 +853,17 @@ Exa a Tavily čtou pole specifická pro poskytovatele ze sáčku s jmenným pros
 
 Vždy vyhrávají generická pole: `query`, `max_results`, `filters` (domény), `country` a téma odvozené od `search_type`. Na Exa `search_type: "news"` ponechává `category: "news"`. Tavily také přijímá `search_type: "finance"` (`topic: "finance"`).
 
+Cena vyhledávání Firecrawl se zaznamenává na započatý blok 10 vrácených výsledků, při 0,002 $ (2 kredity) za blok a alespoň jeden blok na volání ( [Faktura Firecrawl](https://docs.firecrawl.dev/billing) ): 11 výsledků stojí 0,004 $.
+
 Obecná `time_range` se nyní dostává k oběma poskytovatelům: Exa získá `startPublishedDate` (časové razítko ISO ) a Tavily získá `start_date` (`YYYY-MM-DD`). Explicitní datum v `provider_options` přepíše mapované datum.
 
 Výsledky Exa uchovávají `id`, `highlight_scores`, `summary`, `subpages`, `entities` a `extras` v `provider_raw`. Tavily výsledky zachovávají `images` a `favicon`.
 
+Náklady na vyhledávání propojení jsou zaznamenány ve výši 0,005 USD za `depth` `fast` a `standard` a 0,05 USD za `deep` ( [cena za propojení](https://docs.linkup.so/pages/documentation/development/pricing) ), ať už `depth` pochází ze `provider_options` nebo z nastavení připojení.
+
 Exa `type: "lite"` (Exa 3.0) přijímá menší sadu polí a odmítne celý požadavek, když je nastaveno jakékoli jiné pole. Pro lite jsou před voláním zrušeny `additionalQueries`, `systemPrompt` a všechny klávesy `contents` kromě `text` a `highlights`. Zastaralé `subpages`, `subpageTarget`, `highlights.numSentences` a `highlights.highlightsPerUrl` se již nepřesílají.
 
-Účtování nákladů je plochý registr `costPerQuery`, s výjimkou Exa, který se řídí vlastními cenami Exa: 0,007 $ za hovor pro `auto` (a starší `fast`) nebo 0,004 $ za `lite` (a starší `instant`), pokrývající 10 výsledků; 0,001 $ za každý další výsledek; a $ 0,001 za vrácený výsledek, když je nastaveno `contents.summary`. Tavily účtuje `search_depth: "advanced"` více kreditů za hovor a tento rozdíl se v `usage.search_cost_usd` neodráží.
+Účtování nákladů je plochý registr `costPerQuery`, s výjimkou Exa, který se řídí vlastními cenami Exa: 0,007 $ za hovor pro `auto` (a starší `fast`) nebo 0,004 $ za `lite` (a starší `instant`), pokrývající 10 výsledků; 0,001 $ za každý další výsledek; a $ 0,001 za vrácený výsledek, když je nastaveno `contents.summary`. Tavily je zaznamenán ve výši 1 kreditu (0,008 $) za `search_depth` `basic`, `fast` a `ultra-fast` a 2 kredity (0,016 $) za `advanced` ( [kredity Tavily API](https://docs.tavily.com/documentation/api-credits) ). Hovor se `auto_parameters: true`, který Tavily upgraduje na pokročilé, je stále zaznamenán s 1 kreditem.
 
 ---
 

@@ -872,13 +872,17 @@ Exa i Tavily čitaju polja specifična za pružatelja usluga iz vrećice s prost
 
 Generička polja uvijek pobjeđuju: `query`, `max_results`, `filters` (domene), `country` i tema izvedena iz `search_type`. Na Exa, `search_type: "news"` zadržava `category: "news"`. Tavily također prihvaća `search_type: "finance"` (`topic: "finance"`).
 
+Trošak Firecrawl pretraživanja bilježi se po započetom bloku od 10 vraćenih rezultata, po 0,002 USD (2 kredita) po bloku i najmanje jednom bloku po pozivu ( [Firecrawl naplata](https://docs.firecrawl.dev/billing) ): 11 rezultata košta 0,004 USD.
+
 Generički `time_range` sada dopire do oba pružatelja: Exa dobiva `startPublishedDate` (ISO timestamp ), a Tavily dobiva `start_date` (`YYYY-MM-DD`). Eksplicitni datum u `provider_options` nadjačava mapirani.
 
 Exa rezultati zadržavaju `id`, `highlight_scores`, `summary`, `subpages`, `entities` i `extras` u `provider_raw`. Tavily rezultati zadržavaju `images` i `favicon`.
 
+Cijena povezivanja zabilježena je na 0,005 USD za `depth` `fast` i `standard` i 0,05 USD za `deep` ( [Cijena povezivanja](https://docs.linkup.so/pages/documentation/development/pricing) ), bez obzira dolazi li `depth` iz `provider_options` ili postavki veze.
+
 Exa `type: "lite"` (Exa 3.0) prihvaća manji skup polja i odbija cijeli zahtjev kada je postavljeno bilo koje drugo polje. Za lite, `additionalQueries`, `systemPrompt` i svaki `contents` ključ osim `text` i `highlights` ispuštaju se prije poziva. Zastarjeli `subpages`, `subpageTarget`, `highlights.numSentences` i `highlights.highlightsPerUrl` više se ne prosljeđuju.
 
-Troškovno računovodstvo je jedinstveni registar `costPerQuery`, osim za Exa, koji slijedi Exa-ine vlastite cijene: 0,007 USD po pozivu za `auto` (i naslijeđeni `fast`) ili 0,004 USD za `lite` (i naslijeđeni `instant`), pokrivajući 10 rezultata; 0,001 $ za svaki daljnji rezultat; i 0,001 USD po vraćenom rezultatu kada je postavljen `contents.summary`. Tavily naplaćuje `search_depth: "advanced"` na više kredita po pozivu, a ta se razlika ne odražava u `usage.search_cost_usd`.
+Troškovno računovodstvo je jedinstveni registar `costPerQuery`, osim za Exa, koji slijedi Exa-ine vlastite cijene: 0,007 USD po pozivu za `auto` (i naslijeđeni `fast`) ili 0,004 USD za `lite` (i naslijeđeni `instant`), pokrivajući 10 rezultata; 0,001 $ za svaki daljnji rezultat; i 0,001 USD po vraćenom rezultatu kada je postavljen `contents.summary`. Tavily je zabilježen kao 1 kredit (0,008 USD) za `search_depth` `basic`, `fast` i `ultra-fast` i 2 kredita (0,016 USD) za `advanced` ( [Tavily API krediti](https://docs.tavily.com/documentation/api-credits) ). Poziv sa `auto_parameters: true` koji Tavily nadograđuje na napredni i dalje se bilježi s 1 kreditom.
 
 ---
 

@@ -872,13 +872,17 @@ Exa en Tavily lezen providerspecifieke velden uit een naamruimte-bag: `provider_
 
 De generieke velden winnen altijd: `query`, `max_results`, `filters` (domeinen), `country` en het onderwerp afgeleid van `search_type`. Op Exa behoudt `search_type: "news"` `category: "news"`. Tavily accepteert ook `search_type: "finance"` (`topic: "finance"`).
 
+Firecrawl-zoekkosten worden geregistreerd per gestart blok van 10 geretourneerde resultaten, tegen $ 0,002 (2 credits) per blok en ten minste één blok per oproep ( [Firecrawl-facturering](https://docs.firecrawl.dev/billing) ): 11 resultaten kosten $ 0,004.
+
 De generieke `time_range` bereikt nu beide providers: Exa krijgt `startPublishedDate` (ISO timestamp) en Tavily krijgt `start_date` (`YYYY-MM-DD`). Een expliciete datum in `provider_options` overschrijft de in kaart gebrachte datum.
 
 Exa-resultaten behouden `id`, `highlight_scores`, `summary`, `subpages`, `entities` en `extras` in `provider_raw`. Tavily-resultaten behouden `images` en `favicon`.
 
+De zoekkosten voor koppelingen worden vastgelegd op $0,005 voor `depth` `fast` en `standard` en $0,05 voor `deep` ( [Linkup-prijzen](https://docs.linkup.so/pages/documentation/development/pricing) ), ongeacht of `depth` afkomstig is van `provider_options` of van de instellingen van de verbinding.
+
 Exa `type: "lite"` (Exa 3.0) accepteert een kleinere set velden en wijst het hele verzoek af wanneer een ander veld wordt ingesteld. Voor lite worden `additionalQueries`, `systemPrompt` en elke `contents` -sleutel behalve `text` en `highlights` verwijderd vóór de aanroep. De verouderde `subpages`, `subpageTarget`, `highlights.numSentences` en `highlights.highlightsPerUrl` worden niet langer doorgestuurd.
 
-Kostenberekening is het platte register `costPerQuery`, met uitzondering van Exa, dat Exa's eigen prijzen volgt: $0,007 per oproep voor `auto` (en de oude `fast`) of $0,004 voor `lite` (en de oude `instant`), wat 10 resultaten omvat; $ 0,001 voor elk verder resultaat; en $ 0,001 per geretourneerd resultaat wanneer `contents.summary` is ingesteld. Tavily factureert `search_depth: "advanced"` tegen meer credits per gesprek, en dat verschil wordt niet weerspiegeld in `usage.search_cost_usd`.
+Kostenberekening is het platte register `costPerQuery`, met uitzondering van Exa, dat Exa's eigen prijzen volgt: $0,007 per oproep voor `auto` (en de oude `fast`) of $0,004 voor `lite` (en de oude `instant`), wat 10 resultaten omvat; $ 0,001 voor elk verder resultaat; en $ 0,001 per geretourneerd resultaat wanneer `contents.summary` is ingesteld. Tavily wordt geregistreerd op 1 credit ($0,008) voor `search_depth` `basic`, `fast` en `ultra-fast`, en 2 credits ($0,016) voor `advanced` ( [Tavily API credits](https://docs.tavily.com/documentation/api-credits) ). Een gesprek met `auto_parameters: true` dat Tavily upgradet naar geavanceerd wordt nog steeds geregistreerd tegen 1 credit.
 
 ---
 

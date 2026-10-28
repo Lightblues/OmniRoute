@@ -828,13 +828,17 @@ Exa 和 Tavily 從命名空間包中讀取特定於提供者的欄位： `provid
 
 通用欄位總是獲勝： `query`、 `max_results`、 `filters` （域）、 `country`和從`search_type`派生的主題。在 Exa 上， `search_type: "news"`保留`category: "news"`。 Tavily 也接受`search_type: "finance"` (`topic: "finance"`)。
 
+Firecrawl 搜尋成本記錄為每個啟動區塊（包含 10 個返回結果），每個區塊為 0.002 美元（2 個積分），每次呼叫至少一個區塊（ [Firecrawl 計費](https://docs.firecrawl.dev/billing)）：11 個結果的成本為 0.004 美元。
+
 通用`time_range`現在到達兩個提供者：Exa 取得`startPublishedDate` （ISO時間戳記），Tavily 取得`start_date` （`YYYY-MM-DD`）。 `provider_options`中的明確日期會覆蓋映射的日期。
 
 Exa 結果將`id`、 `highlight_scores`、 `summary`、 `subpages`、 `entities`和`extras`保留在`provider_raw`。整體結果保留`images`和`favicon`。
 
+Linkup search cost is recorded at $0.005 for `depth` `fast` and `standard` and $0.05 for `deep` ([Linkup pricing](https://docs.linkup.so/pages/documentation/development/pricing)), whether `depth` comes from `provider_options` or the connection's settings.
+
 Exa `type: "lite"` (Exa 3.0) 接受較小的欄位集，並在設定任何其他欄位時拒絕整個請求。對於 lite， `additionalQueries`、 `systemPrompt`和除`text`和`highlights`之外的每個`contents`鍵在呼叫之前都會被刪除。已棄用的`subpages`、 `subpageTarget`、 `highlights.numSentences`和`highlights.highlightsPerUrl`不再轉發。
 
-成本核算是平面註冊`costPerQuery`，Exa 除外，它遵循 Exa 自己的定價： `auto` （和舊版`fast`）每次呼叫 0.007 美元， `lite` （和舊版`instant`）每次呼叫 0.004 美元，涵蓋 10 個結果；每`contents.summary`結果 0.001 美元；當設定結果 0.001 美元。 Tavilly 對`search_depth: "advanced"`每次呼叫收取更多積分，且該差異未反映在`usage.search_cost_usd`中。
+Cost accounting is the flat registry `costPerQuery`, except for Exa, which follows Exa's own pricing: $0.007 per call for `auto` (and the legacy `fast`) or $0.004 for `lite` (and the legacy `instant`), covering 10 results; $0.001 for each further result; and $0.001 per returned result when `contents.summary` is set. Tavily is recorded at 1 credit ($0.008) for `search_depth` `basic`, `fast` and `ultra-fast`, and 2 credits ($0.016) for `advanced` ([Tavily API credits](https://docs.tavily.com/documentation/api-credits)). A call with `auto_parameters: true` that Tavily upgrades to advanced is still recorded at 1 credit.
 
 ---
 

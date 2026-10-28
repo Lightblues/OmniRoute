@@ -874,13 +874,17 @@ Exa og Tavily læser udbyderspecifikke felter fra en pose med navneafstand: `pro
 
 De generiske felter vinder altid: `query`, `max_results`, `filters` (domæner), `country` og emnet afledt af `search_type`. På Exa beholder `search_type: "news"` `category: "news"`. Tavily accepterer også `search_type: "finance"` (`topic: "finance"`).
 
+Firecrawl-søgningsomkostninger registreres pr. startet blok af 10 returnerede resultater, til $0,002 (2 kreditter) en blokering og mindst én blokering pr. opkald ( [Firecrawl-fakturering](https://docs.firecrawl.dev/billing) ): 11 resultater koster $0,004.
+
 Den generiske `time_range` når nu begge udbydere: Exa får `startPublishedDate` (ISO timestamp) og Tavily får `start_date` (`YYYY-MM-DD`). En eksplicit dato i `provider_options` tilsidesætter den tilknyttede.
 
 Exa-resultater holder `id`, `highlight_scores`, `summary`, `subpages`, `entities` og `extras` i `provider_raw`. Tavily resultater holder `images` og `favicon`.
 
+Linkup-søgningsomkostninger registreres til $0,005 for `depth` `fast` og `standard` og $0,05 for `deep` ( [Linkup-prissætning](https://docs.linkup.so/pages/documentation/development/pricing) ), uanset om `depth` kommer fra `provider_options` eller forbindelsens indstillinger.
+
 Exa `type: "lite"` (Exa 3.0) accepterer et mindre sæt felter og afviser hele anmodningen, når et hvilket som helst andet felt er indstillet. For lite slettes `additionalQueries`, `systemPrompt` og hver `contents` -tast undtagen `text` og `highlights` før opkaldet. De forældede `subpages`, `subpageTarget`, `highlights.numSentences` og `highlights.highlightsPerUrl` videresendes ikke længere.
 
-Omkostningsregnskab er det flade register `costPerQuery` undtagen Exa, som følger Exas egen prissætning: $0,007 pr. opkald for `auto` (og den gamle `fast`) eller $0,004 for `lite` (og den ældre `instant`), der dækker 10 resultater; $0,001 for hvert yderligere resultat; og $0,001 pr. returneret resultat, når `contents.summary` er indstillet. Tavily fakturerer `search_depth: "advanced"` med flere kreditter pr. opkald, og den forskel afspejles ikke i `usage.search_cost_usd`.
+Omkostningsregnskab er det flade register `costPerQuery` undtagen Exa, som følger Exas egen prissætning: $0,007 pr. opkald for `auto` (og den gamle `fast`) eller $0,004 for `lite` (og den ældre `instant`), der dækker 10 resultater; $0,001 for hvert yderligere resultat; og $0,001 pr. returneret resultat, når `contents.summary` er indstillet. Tavily er registreret til 1 kredit ($0,008) for `search_depth` `basic`, `fast` og `ultra-fast` og 2 kreditter ($0,016) for `advanced` ( [Tavily API credits](https://docs.tavily.com/documentation/api-credits) ). Et opkald med `auto_parameters: true`, som Tavily opgraderer til avanceret, optages stadig med 1 kredit.
 
 ---
 

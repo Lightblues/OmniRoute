@@ -872,13 +872,17 @@ POST /v1/providers/{provider}/images/generations
 
 الحقول العامة تفوز دائمًا: `query` و `max_results` و `filters` (المجالات) و `country` والموضوع المشتق من `search_type`. في Exa، `search_type: "news"` يحتفظ `category: "news"`. يقبل Tavily أيضًا `search_type: "finance"` (`topic: "finance"`).
 
+يتم تسجيل تكلفة بحث الزحف الناري لكل كتلة بدأت مكونة من 10 نتائج تم إرجاعها، بسعر 0.002 USD (اعتمادان) للكتل وكتلة واحدة على الأقل لكل مكالمة ( [فواتير الزحف الناري](https://docs.firecrawl.dev/billing) ): تكلفة 11 نتيجة 0.004 دولار أمريكي.
+
 يصل الآن `time_range` العام إلى كلا الموفرين: يحصل Exa على `startPublishedDate` (ISO timestamp) ويحصل Tavily على `start_date` (`YYYY-MM-DD`). التاريخ الصريح في `provider_options` يتجاوز التاريخ المعين.
 
 نتائج Exa تبقي `id` و `highlight_scores` و `summary` و `subpages` و `entities` و `extras` في `provider_raw`. نتائج Tavily تحافظ على `images` و `favicon`.
 
+يتم تسجيل تكلفة البحث عن الارتباط بمبلغ 0.005 USD لـ `depth` `fast` و `standard` و0.05 USD لـ `deep` ( [تسعير الارتباط](https://docs.linkup.so/pages/documentation/development/pricing) )، سواء أتى `depth` من `provider_options` أو من إعدادات الاتصال.
+
 يقبل Exa `type: "lite"` (Exa 3.0) مجموعة أصغر من الحقول ويرفض الطلب بالكامل عند تعيين أي حقل آخر. بالنسبة إلى lite، يتم إسقاط `additionalQueries` و `systemPrompt` وكل مفتاح `contents` باستثناء `text` و `highlights` قبل المكالمة. لم يعد يتم إعادة توجيه `subpages` و `subpageTarget` و `highlights.numSentences` و `highlights.highlightsPerUrl` المهملة.
 
-محاسبة التكاليف هي السجل الثابت `costPerQuery`، باستثناء Exa، الذي يتبع تسعير Exa الخاص: 0.007 USD لكل استدعاء لـ `auto` (و `fast` القديم) أو 0.004 USD لـ `lite` (و `instant` القديم)، ويغطي 10 نتائج؛ 0.001 دولار لكل نتيجة إضافية؛ و0.001 دولار لكل نتيجة يتم إرجاعها عند تعيين `contents.summary`. تقوم Tavily بدفع `search_depth: "advanced"` بعدد أكبر من الاعتمادات لكل مكالمة، ولا ينعكس هذا الفرق في `usage.search_cost_usd`.
+محاسبة التكاليف هي السجل الثابت `costPerQuery`، باستثناء Exa، الذي يتبع تسعير Exa الخاص: 0.007 USD لكل استدعاء لـ `auto` (و `fast` القديم) أو 0.004 USD لـ `lite` (و `instant` القديم)، ويغطي 10 نتائج؛ 0.001 دولار لكل نتيجة إضافية؛ و0.001 دولار لكل نتيجة يتم إرجاعها عند تعيين `contents.summary`. تم تسجيل Tavily برصيد واحد (0.008 دولار) لـ `search_depth` `basic` و `fast` و `ultra-fast` و 2 رصيد (0.016 دولار) لـ `advanced` ( [أرصدة Tavily API](https://docs.tavily.com/documentation/api-credits) ). المكالمة مع `auto_parameters: true` التي يقوم Tavily بترقيتها إلى المستوى المتقدم لا تزال مسجلة برصيد واحد.
 
 ---
 

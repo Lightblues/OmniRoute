@@ -866,13 +866,17 @@ Exa اور Tavily نام کی جگہ والے بیگ سے فراہم کنندہ 
 
 عام فیلڈز ہمیشہ جیتتے ہیں: `query`، `max_results`، `filters` (ڈومینز)، `country` اور `search_type` سے ماخوذ موضوع۔ Exa پر، `search_type: "news"` `category: "news"` رکھتا ہے۔ Tavily `search_type: "finance"` (`topic: "finance"`) کو بھی قبول کرتا ہے۔
 
+فائر کرال تلاش کی لاگت 10 لوٹے گئے نتائج کے فی شروع شدہ بلاک میں، $0.002 (2 کریڈٹ) ایک بلاک اور کم از کم ایک بلاک فی کال ( [فائرکرول بلنگ](https://docs.firecrawl.dev/billing) ): 11 نتائج کی لاگت $0.004 ہے۔
+
 عام `time_range` اب دونوں فراہم کنندگان تک پہنچ جاتا ہے: Exa کو `startPublishedDate` (ISO ٹائم اسٹیمپ) اور Tavily کو `start_date` (`YYYY-MM-DD`) ملتا ہے۔ `provider_options` میں ایک واضح تاریخ میپ شدہ کو اوور رائیڈ کرتی ہے۔
 
 Exa نتائج `id`, `highlight_scores`, `summary`, `subpages`, `entities` اور `extras` `provider_raw` میں رکھتے ہیں۔ Tavily کے نتائج `images` اور `favicon` برقرار رکھتے ہیں۔
 
+لنک اپ کی تلاش کی قیمت `depth` `fast` اور `standard` کے لیے $0.005 اور `deep` کے لیے $0.05 ( [Linkup pricing](https://docs.linkup.so/pages/documentation/development/pricing) ) ریکارڈ کی گئی ہے، چاہے `depth` `provider_options` سے آیا ہو یا کنکشن کی ترتیبات سے۔
+
 Exa `type: "lite"` (Exa 3.0) فیلڈز کے ایک چھوٹے سیٹ کو قبول کرتا ہے اور جب کوئی دوسرا فیلڈ سیٹ کیا جاتا ہے تو پوری درخواست کو مسترد کر دیتا ہے۔ لائٹ کے لیے، `additionalQueries`، `systemPrompt` اور `text` اور `highlights` کے علاوہ ہر `contents` کلید کال سے پہلے چھوڑ دی جاتی ہے۔ فرسودہ `subpages`، `subpageTarget`، `highlights.numSentences` اور `highlights.highlightsPerUrl` مزید آگے نہیں بھیجے جاتے ہیں۔
 
-لاگت کا حساب کتاب فلیٹ رجسٹری `costPerQuery` ہے، Exa کے علاوہ، جو Exa کی اپنی قیمتوں کی پیروی کرتا ہے: $0.007 فی کال `auto` (اور لیگیسی `fast`) کے لیے یا $0.004 `lite` (اور لیگیسی `instant`) کے لیے، جس میں 10 نتائج شامل ہیں۔ ہر مزید نتیجے کے لیے $0.001؛ اور $0.001 فی لوٹا ہوا نتیجہ جب `contents.summary` سیٹ ہو۔ Tavily `search_depth: "advanced"` فی کال زیادہ کریڈٹ پر بل دیتا ہے، اور یہ فرق `usage.search_cost_usd` میں ظاہر نہیں ہوتا ہے۔
+لاگت کا حساب کتاب فلیٹ رجسٹری `costPerQuery` ہے، Exa کے علاوہ، جو Exa کی اپنی قیمتوں کی پیروی کرتا ہے: $0.007 فی کال `auto` (اور لیگیسی `fast`) کے لیے یا $0.004 `lite` (اور لیگیسی `instant`) کے لیے، جس میں 10 نتائج شامل ہیں۔ ہر مزید نتیجے کے لیے $0.001؛ اور $0.001 فی لوٹا ہوا نتیجہ جب `contents.summary` سیٹ ہو۔ Tavily کو `search_depth` `basic`، `fast` اور `ultra-fast` کے لیے 1 کریڈٹ ($0.008) اور `advanced` ( [Tavily API کریڈٹس](https://docs.tavily.com/documentation/api-credits) ) کے لیے 2 کریڈٹ ($0.016) پر ریکارڈ کیا گیا ہے۔ `auto_parameters: true` کے ساتھ ایک کال جسے Tavily ایڈوانس میں اپ گریڈ کرتا ہے اب بھی 1 کریڈٹ پر ریکارڈ کیا جاتا ہے۔
 
 ---
 

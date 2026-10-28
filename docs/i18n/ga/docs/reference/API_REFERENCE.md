@@ -854,13 +854,17 @@ Léann Exa agus Tavily réimsí a bhaineann go sonrach le soláthraí ó mhála 
 
 Bíonn bua ag na réimsí cineálacha i gcónaí: `query`, `max_results`, `filters` (fearainn), `country` agus an topaic a dhíorthaítear ó `search_type`. Ar Exa, coinníonn `search_type: "news"` `category: "news"`. Glacann Tavily freisin `search_type: "finance"` (`topic: "finance"`).
 
+Taifeadtar costas cuardaigh Firecrawl in aghaidh an bhloc tosaithe de 10 dtorthaí a cuireadh ar ais, ag $0.002 (2 chreidmheas) an bloc agus bloc amháin ar a laghad in aghaidh an ghlao ( [Billeáil Firecrawl](https://docs.firecrawl.dev/billing) ): chosain 11 toradh $0.004.
+
 Sroicheann an `time_range` cineálach an dá sholáthraí anois: faigheann Exa `startPublishedDate` (stampa ama ISO ) agus faigheann Tavily `start_date` (`YYYY-MM-DD`). Sáraíonn dáta sainráite i `provider_options` an ceann léarscáilithe.
 
 Coinníonn torthaí exa `id`, `highlight_scores`, `summary`, `subpages`, `entities` agus `extras` i `provider_raw`. Coinníonn torthaí tavily `images` agus `favicon`.
 
+Taifeadtar costas cuardaigh Linkup ag $0.005 le haghaidh `depth` `fast` agus `standard` agus $0.05 le haghaidh `deep` ( [Praghsáil Linkup](https://docs.linkup.so/pages/documentation/development/pricing) ), cibé an dtagann `depth` ó `provider_options` nó ó shocruithe an naisc.
+
 Glacann Exa `type: "lite"` (Exa 3.0) le sraith réimsí níos lú agus diúltaíonn sé don iarratas iomlán nuair a shocraítear aon réimse eile. I gcás lite, scaoiltear `additionalQueries`, `systemPrompt` agus gach eochair `contents` seachas `text` agus `highlights` roimh an nglao. Ní chuirtear na `subpages`, `subpageTarget`, `highlights.numSentences` agus `highlights.highlightsPerUrl` ar aghaidh a thuilleadh.
 
-Is éard atá i gcuntasaíocht chostais ná an clárlann árasán `costPerQuery`, ach amháin Exa, a leanann praghsáil Exa féin: $0.007 in aghaidh an ghlao ar `auto` (agus an `fast` oidhreachta) nó $0.004 le haghaidh `lite` (agus an oidhreacht `instant`), ag clúdach 10 dtorthaí; $0.001 do gach toradh eile; agus $0.001 in aghaidh an toraidh a tugadh ar ais nuair a shocraítear `contents.summary`. Billí tavily `search_depth: "advanced"` ag níos mó creidmheasanna in aghaidh an ghlao, agus ní léirítear an difríocht sin i `usage.search_cost_usd`.
+Is éard atá i gcuntasaíocht chostais ná an clárlann árasán `costPerQuery`, ach amháin Exa, a leanann praghsáil Exa féin: $0.007 in aghaidh an ghlao ar `auto` (agus an `fast` oidhreachta) nó $0.004 le haghaidh `lite` (agus an oidhreacht `instant`), ag clúdach 10 dtorthaí; $0.001 do gach toradh eile; agus $0.001 in aghaidh an toraidh a tugadh ar ais nuair a shocraítear `contents.summary`. Taifeadtar Tavily ag 1 chreidmheas ($0.008) le haghaidh `search_depth` `basic`, `fast` agus `ultra-fast`, agus 2 chreidmheas ($0.016) le haghaidh `advanced` ( [creidmheasanna Tavily API](https://docs.tavily.com/documentation/api-credits) ). Tá glao le `auto_parameters: true` a uasghrádaíonn Tavily go hardleibhéal fós taifeadta ag 1 chreidmheas.
 
 ---
 

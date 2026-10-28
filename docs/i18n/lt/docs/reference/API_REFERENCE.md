@@ -873,13 +873,17 @@ Web/search teikėjo abstrakcija (Tavily, Brave, Exa, Serper ir kt.).
 
 Visada laimi bendrieji laukai: `query`, `max_results`, `filters` (domenai), `country` ir tema, kilusi iš `search_type`. „Exa“ `search_type: "news"` išlaiko `category: "news"`. Tavily taip pat priima `search_type: "finance"` (`topic: "finance"`).
 
+„Firecrawl“ paieškos kaina įrašoma už pradėtą 10 grąžintų rezultatų bloką, 0,002 USD (2 kreditai) už bloką ir bent vieną bloką už skambutį ( [„Firecrawl billing](https://docs.firecrawl.dev/billing) “): 11 rezultatų kainuoja 0,004 USD.
+
 Bendrasis `time_range` dabar pasiekia abu teikėjus: Exa gauna `startPublishedDate` (ISO timestamp), o Tavily gauna `start_date` (`YYYY-MM-DD`). Tiksli data `provider_options` viršija susietą datą.
 
 Exa rezultatai išsaugo `id`, `highlight_scores`, `summary`, `subpages`, `entities` ir `extras` `provider_raw`. Tavily rezultatai išlaiko `images` ir `favicon`.
 
+Susiejimo paieškos kaina įrašoma 0,005 USD už `depth` `fast` ir `standard` ir 0,05 USD už `deep` ( [susiejimo kainodara](https://docs.linkup.so/pages/documentation/development/pricing) ), nesvarbu, ar `depth` gaunama iš `provider_options` ar ryšio nustatymų.
+
 Exa `type: "lite"` (Exa 3.0) priima mažesnį laukų rinkinį ir atmeta visą užklausą, kai nustatomas bet kuris kitas laukas. Lite, `additionalQueries`, `systemPrompt` ir kiekvienas `contents` klavišas, išskyrus `text` ir `highlights` atmetamas prieš skambinant. Nebenaudojami `subpages`, `subpageTarget`, `highlights.numSentences` ir `highlights.highlightsPerUrl` nebepersiunčiami.
 
-Išlaidų apskaita yra vienodo registro `costPerQuery`, išskyrus Exa, kuri vadovaujasi pačios Exa kainodara: 0,007 USD už `auto` (ir senojo `fast`) skambutį arba 0,004 USD už `lite` (ir senąjį `instant`), apimanti 10 rezultatų; 0,001 USD už kiekvieną tolesnį rezultatą; ir 0,001 USD už grąžintą rezultatą, kai nustatytas `contents.summary`. Tavily apmokestina `search_depth: "advanced"` daugiau kreditų už skambutį ir šis skirtumas neatsispindi `usage.search_cost_usd`.
+Išlaidų apskaita yra vienodo registro `costPerQuery`, išskyrus Exa, kuri vadovaujasi pačios Exa kainodara: 0,007 USD už `auto` (ir senojo `fast`) skambutį arba 0,004 USD už `lite` (ir senąjį `instant`), apimanti 10 rezultatų; 0,001 USD už kiekvieną tolesnį rezultatą; ir 0,001 USD už grąžintą rezultatą, kai nustatytas `contents.summary`. Tavily įrašytas 1 kreditu (0,008 USD) už `search_depth` `basic`, `fast` ir `ultra-fast` ir 2 kreditus (0,016 USD) už `advanced` ( [Tavily API kreditai](https://docs.tavily.com/documentation/api-credits) ). Skambutis su `auto_parameters: true`, kurį Tavily atnaujina į išplėstinį, vis tiek įrašomas į 1 kreditą.
 
 ---
 

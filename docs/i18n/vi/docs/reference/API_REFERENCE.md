@@ -848,13 +848,17 @@ Exa và Tavily đọc các trường dành riêng cho nhà cung cấp từ một
 
 Các trường chung luôn thắng: `query`, `max_results`, `filters` (tên miền), `country` và chủ đề bắt nguồn từ `search_type`. Trên Exa, `search_type: "news"` giữ `category: "news"`. Tavily cũng chấp nhận `search_type: "finance"` (`topic: "finance"`).
 
+Chi phí tìm kiếm Firecrawl được ghi lại cho mỗi khối bắt đầu gồm 10 kết quả được trả về, ở mức 0,002 USD (2 tín dụng) một khối và ít nhất một khối cho mỗi cuộc gọi ( [Thanh toán Firecrawl](https://docs.firecrawl.dev/billing) ): 11 kết quả có giá 0,004 USD.
+
 `time_range` chung hiện đến tay cả hai nhà cung cấp: Exa nhận được `startPublishedDate` (ISO dấu thời gian) và Tavily nhận được `start_date` (`YYYY-MM-DD`). Ngày rõ ràng trong `provider_options` sẽ ghi đè ngày được ánh xạ.
 
 Kết quả Exa giữ `id`, `highlight_scores`, `summary`, `subpages`, `entities` và `extras` trong `provider_raw`. Kết quả rõ ràng giữ `images` và `favicon`.
 
+Chi phí tìm kiếm liên kết được ghi nhận ở mức 0,005 USD cho `depth` `fast` và `standard` và 0,05 USD cho `deep` ( [Giá liên kết](https://docs.linkup.so/pages/documentation/development/pricing) ), cho dù `depth` đến từ `provider_options` hay cài đặt của kết nối.
+
 Exa `type: "lite"` (Exa 3.0) chấp nhận một nhóm trường nhỏ hơn và từ chối toàn bộ yêu cầu khi bất kỳ trường nào khác được đặt. Đối với lite, `additionalQueries`, `systemPrompt` và mọi khóa `contents` ngoại trừ `text` và `highlights` đều bị loại bỏ trước cuộc gọi. `subpages`, `subpageTarget`, `highlights.numSentences` và `highlights.highlightsPerUrl` không được dùng nữa không còn được chuyển tiếp nữa.
 
-Kế toán chi phí là sổ đăng ký cố định `costPerQuery`, ngoại trừ Exa, tuân theo giá riêng của Exa: 0,007 USD mỗi lệnh gọi cho `auto` (và `fast` cũ) hoặc 0,004 USD cho `lite` (và `instant` cũ), bao gồm 10 kết quả; 0,001 USD cho mỗi kết quả tiếp theo; và 0,001 USD cho mỗi kết quả trả về khi `contents.summary` được đặt. Lập hóa đơn `search_depth: "advanced"` một cách khéo léo với nhiều tín dụng hơn cho mỗi cuộc gọi và sự khác biệt đó không được phản ánh trong `usage.search_cost_usd`.
+Kế toán chi phí là sổ đăng ký cố định `costPerQuery`, ngoại trừ Exa, tuân theo giá riêng của Exa: 0,007 USD mỗi lệnh gọi cho `auto` (và `fast` cũ) hoặc 0,004 USD cho `lite` (và `instant` cũ), bao gồm 10 kết quả; 0,001 USD cho mỗi kết quả tiếp theo; và 0,001 USD cho mỗi kết quả trả về khi `contents.summary` được đặt. Tavily được ghi ở mức 1 tín dụng ($0,008) cho `search_depth` `basic`, `fast` và `ultra-fast` và 2 tín dụng ($0,016) cho `advanced` ( [tín dụng Tavily API](https://docs.tavily.com/documentation/api-credits) ). Cuộc gọi với `auto_parameters: true` mà Tavily nâng cấp lên nâng cao vẫn được ghi ở mức 1 tín dụng.
 
 ---
 

@@ -873,13 +873,17 @@ Exa da Tavily suna karanta takamaiman filayen mai bayarwa daga jakar da aka raba
 
 Filayen gabaɗaya koyaushe suna nasara: `query`, `max_results`, `filters` (yankuna), `country` da batun da aka samo daga `search_type`. A kan Exa, `search_type: "news"` yana kiyaye `category: "news"`. Tavily kuma yana karɓar `search_type: "finance"` (`topic: "finance"`).
 
+Ana yin rikodin farashin binciken Firecrawl ga kowane farkon toshe na sakamakon 10 da aka dawo, a $0.002 (ƙididdigar ƙididdigewa 2) toshe kuma aƙalla toshe ɗaya a kowane kira ( [Billing na Firecrawl](https://docs.firecrawl.dev/billing) ): Sakamakon 11 ya kai $0.004.
+
 Jigon `time_range` yanzu ya isa duka masu samarwa: Exa yana samun `startPublishedDate` (ISO timestamp) da Tavily yana samun `start_date` (`YYYY-MM-DD`). Ƙayyadaddun kwanan wata a cikin `provider_options` ya soke wanda aka tsara.
 
 Sakamako yana kiyaye `id`, `highlight_scores`, `summary`, `subpages`, `entities` da `extras` a cikin `provider_raw`. Sakamako a zahiri suna kiyaye `images` da `favicon`.
 
+Ana yin rikodin farashin neman haɗin kai a $0.005 don `depth` `fast` da `standard` da $0.05 don `deep` ( [Farashin haɗin gwiwa](https://docs.linkup.so/pages/documentation/development/pricing) ), ko `depth` ya fito daga `provider_options` ko saitunan haɗin.
+
 Exa `type: "lite"` (Exa 3.0) yana karɓar ƙaramin saitin filayen kuma ya ƙi duk buƙatar lokacin da aka saita kowane filin. Don lite, `additionalQueries`, `systemPrompt` da kowane maɓallin `contents` banda `text` da `highlights` ana sauke kafin kiran. Ba a ƙara turawa da aka soke `subpages`, `subpageTarget`, `highlights.numSentences` da `highlights.highlightsPerUrl`.
 
-Kididdigar ƙididdigewa ita ce ɗakin rajistar `costPerQuery`, ban da Exa, wanda ya biyo bayan farashin kansa na Exa: $0.007 a kowane kira don `auto` (da `fast` na gado ) ko $0.004 don `lite` (da `instant` na gado), yana rufe sakamako 10; $0.001 ga kowane ƙarin sakamako; da $0.001 a kowane sakamakon da aka dawo lokacin da aka saita `contents.summary`. Tavily lissafin `search_depth: "advanced"` akan ƙarin ƙididdigewa kowane kira, kuma wannan bambancin ba ya bayyana a cikin `usage.search_cost_usd`.
+Kididdigar ƙididdigewa ita ce ɗakin rajistar `costPerQuery`, ban da Exa, wanda ya biyo bayan farashin kansa na Exa: $0.007 a kowane kira don `auto` (da `fast` na gado ) ko $0.004 don `lite` (da `instant` na gado), yana rufe sakamako 10; $0.001 ga kowane ƙarin sakamako; da $0.001 a kowane sakamakon da aka dawo lokacin da aka saita `contents.summary`. Ana yin rikodin Tavily a 1 kiredit ($0.008) don `search_depth` `basic`, `fast` da `ultra-fast`, da ƙididdiga 2 ($0.016) don `advanced` ( [Tavily API credits](https://docs.tavily.com/documentation/api-credits) ). Kira tare da `auto_parameters: true` wanda Tavily ya inganta zuwa ci gaba har yanzu ana yin rikodin shi a 1 kiredit.
 
 ---
 

@@ -848,13 +848,17 @@ Exa و Tavily فیلدهای خاص ارائه دهنده را از یک کیس�
 
 فیلدهای عمومی همیشه برنده هستند: `query`، `max_results`، `filters` (دامنه ها)، `country` و موضوع مشتق شده از `search_type`. در Exa، `search_type: "news"` `category: "news"` را نگه میدارد. طویلی نیز `search_type: "finance"` (`topic: "finance"`) را می پذیرد.
 
+هزینه جستجوی Firecrawl برای هر بلوک شروع شده از 10 نتیجه بازگشتی، 0.002 دلار (2 اعتبار) هر بلوک و حداقل یک بلوک در هر تماس ( [صورتحساب Firecrawl](https://docs.firecrawl.dev/billing) ) ثبت می شود: 11 نتیجه 0.004 دلار هزینه دارد.
+
 `time_range` عمومی اکنون به هر دو ارائهدهنده میرسد: Exa `startPublishedDate` (مهر زمانی ISO ) و Tavily `start_date` (`YYYY-MM-DD`) دریافت میکند. تاریخ صریح در `provider_options` تاریخ نگاشت شده را لغو می کند.
 
 نتایج Exa `id`, `highlight_scores`, `summary`, `subpages`, `entities` و `extras` را در `provider_raw` نگه می دارند . طویلی نتایج حفظ `images` و `favicon`.
 
+هزینه جستجوی پیوند 0.005 دلار برای `depth` `fast` و `standard` و 0.05 دلار برای `deep` ( [قیمت گذاری پیوندها](https://docs.linkup.so/pages/documentation/development/pricing) ) ثبت می شود، چه `depth` از `provider_options` باشد یا از تنظیمات اتصال.
+
 Exa `type: "lite"` (Exa 3.0) مجموعه کوچکتری از فیلدها را می پذیرد و در صورت تنظیم هر فیلد دیگری، کل درخواست را رد می کند. برای lite، `additionalQueries`، `systemPrompt` و هر کلید `contents` به جز `text` و `highlights` قبل از تماس حذف میشوند. `subpages`، `subpageTarget`، `highlights.numSentences` و `highlights.highlightsPerUrl` منسوخ شده دیگر ارسال نمیشوند.
 
-حسابداری بهای تمام شده `costPerQuery` ثبت ثابت است، به جز Exa، که از قیمت گذاری خود Exa پیروی می کند: 0.007 دلار در هر تماس برای `auto` (و `fast` میراث) یا 0.004 دلار برای `lite` (و `instant` میراث)، که 10 نتیجه را پوشش می دهد. 0.001 دلار برای هر نتیجه بعدی؛ و 0.001 دلار به ازای هر نتیجه برگشتی زمانی که `contents.summary` تنظیم شود. Tavily `search_depth: "advanced"` را با اعتبار بیشتری در هر تماس صورتحساب میکند، و این تفاوت در `usage.search_cost_usd` منعکس نمیشود.
+حسابداری بهای تمام شده `costPerQuery` ثبت ثابت است، به جز Exa، که از قیمت گذاری خود Exa پیروی می کند: 0.007 دلار در هر تماس برای `auto` (و `fast` میراث) یا 0.004 دلار برای `lite` (و `instant` میراث)، که 10 نتیجه را پوشش می دهد. 0.001 دلار برای هر نتیجه بعدی؛ و 0.001 دلار به ازای هر نتیجه برگشتی زمانی که `contents.summary` تنظیم شود. Tavily با 1 اعتبار (0.008 دلار) برای `search_depth` `basic`، `fast` و `ultra-fast`، و 2 اعتبار (0.016 دلار) برای `advanced` ( [اعتبارات Tavily API](https://docs.tavily.com/documentation/api-credits) ) ثبت شده است. تماس با `auto_parameters: true` که Tavily آن را به پیشرفته ارتقا میدهد همچنان با 1 اعتبار ثبت میشود.
 
 ---
 
