@@ -12,9 +12,11 @@ export interface SuccessTransitionProps extends Omit<ComponentProps<"section">, 
   /** Confirmation dwell only. Reduced-motion users continue immediately. */
   durationMs?: number;
   continueLabel?: string;
+  /** Center the handoff in the available app workspace. */
+  presentation?: "card" | "stage";
 }
 /** A brief verified-success handoff. It never performs or infers a payment. */
-export function SuccessTransition({ title, description, onComplete, durationMs = 1100, continueLabel = "Continue to dashboard", className, ...props }: SuccessTransitionProps) {
+export function SuccessTransition({ title, description, onComplete, durationMs = 1100, continueLabel = "Continue to dashboard", presentation = "card", className, ...props }: SuccessTransitionProps) {
   const id = useId(), completed = useRef(false), complete = useRef(onComplete);
   useEffect(() => { complete.current = onComplete; }, [onComplete]);
   const finish = useCallback(() => {
@@ -30,8 +32,8 @@ export function SuccessTransition({ title, description, onComplete, durationMs =
     return () => { window.clearTimeout(timer); motion.removeEventListener("change", reduce); };
   }, [durationMs, finish]);
   return <section role="status" aria-live="polite" aria-atomic="true" aria-labelledby={id} data-slot="success-transition"
-    className={cn("ci-success-transition", className)} {...props}>
-    <span className="ci-success-transition__icon"><CircleCheck aria-hidden="true" /></span>
+    data-presentation={presentation} className={cn("ci-success-transition", className)} {...props}>
+    <span className="ci-success-transition__icon"><span className="ci-success-transition__ring" aria-hidden="true" /><CircleCheck aria-hidden="true" /></span>
     <div className="ci-success-transition__copy"><h2 id={id}>{title}</h2>{description && <p>{description}</p>}</div>
     <Button type="button" variant="ghost" size="sm" onClick={finish}>{continueLabel}</Button>
   </section>;

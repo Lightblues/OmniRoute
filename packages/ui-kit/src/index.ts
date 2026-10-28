@@ -368,3 +368,5 @@ export { TokenSavingsList, ClientQuickStart, OverviewPanels, type TokenSavingsIt
 export { RecoveryState, type RecoveryStateProps } from "./recovery-state";
 export { SuccessTransition, type SuccessTransitionProps } from "./success-transition";
 export { SecretValue, type SecretValueProps } from "./secret-value";
+
+export { SetupSelectionSummary, type SetupSelectionSummaryProps } from "./onboarding-patterns";
