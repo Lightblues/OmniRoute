@@ -9,6 +9,7 @@ import {
   extractUsage,
   hasValidUsage,
   estimateUsage,
+  estimateInputTokens,
   logUsage,
   addBufferToUsage,
   filterUsageForFormat,
@@ -253,6 +254,12 @@ type TranslateState = ReturnType<typeof initState> & {
   declaredToolNames?: Set<string> | null;
   customToolNames?: ReadonlySet<string>;
   requestToolIdentityMap?: Map<string, { namespace: string; name: string }> | null;
+  /**
+   * Request-side input token estimate for Claude clients. OpenAI-compatible upstreams
+   * report usage only at stream end, but Claude Code sizes its context (and decides
+   * auto-compaction) from message_start.usage, so a zero there disables compaction.
+   */
+  estimatedInputTokens?: number;
   upstreamError?: {
     status: number;
     type: string;
@@ -891,6 +898,7 @@ export function createSSEStream(options: StreamOptions = {}) {
           declaredToolNames: collectDeclaredToolNames(body),
           customToolNames,
           requestToolIdentityMap,
+          estimatedInputTokens: sourceFormat === FORMATS.CLAUDE ? estimateInputTokens(body) : 0,
         }
       : null;
 

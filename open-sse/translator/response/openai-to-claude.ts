@@ -552,7 +552,10 @@ export function openaiToClaudeResponse(chunk, state) {
         content: [],
         stop_reason: null,
         stop_sequence: null,
-        usage: { input_tokens: 0, output_tokens: 0 },
+        usage: {
+          input_tokens: state.usage?.input_tokens || state.estimatedInputTokens || 0,
+          output_tokens: 0,
+        },
       },
     });
   }
