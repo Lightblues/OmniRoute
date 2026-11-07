@@ -148,7 +148,8 @@ function toNodeSqliteOptions(options?: Record<string, unknown>): NodeSqliteOptio
  */
 function logSwallowedDriverError(driver: string, err: unknown): void {
   const message = err instanceof Error ? err.message : String(err);
-  console.debug(`[DB] Sync driver '${driver}' failed to open, will try next driver: ${message}`);
+  // stderr (console.warn): console.debug writes to stdout and corrupts CLI `--output json`.
+  console.warn(`[DB] Sync driver '${driver}' failed to open, will try next driver: ${message}`);
 }
 
 declare global {

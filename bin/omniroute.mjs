@@ -125,7 +125,9 @@ function migrateElectronServerEnv(dataDir) {
     const serverEnvPath = join(dataDir, "server.env");
     if (existsSync(envPath) || !existsSync(serverEnvPath)) return;
     writePrivateFile(envPath, readFileSync(serverEnvPath, "utf-8"));
-    console.log(`  \x1b[2m♻ Migrated Electron secrets from ${serverEnvPath} to ${envPath}\x1b[0m`);
+    console.error(
+      `  \x1b[2m♻ Migrated Electron secrets from ${serverEnvPath} to ${envPath}\x1b[0m`
+    );
   } catch {
     // Ignore errors migrating server.env — fall back to normal env loading below.
   }
@@ -194,7 +196,8 @@ function loadEnvFile() {
   }
 
   for (const envPath of loadedEnvPaths) {
-    console.log(`  \x1b[2m📋 Loaded env from ${envPath}\x1b[0m`);
+    // stderr: stdout is reserved for command output (`--output json` must stay parseable).
+    console.error(`  \x1b[2m📋 Loaded env from ${envPath}\x1b[0m`);
   }
 
   for (const [key, { winner, loser }] of shadowed) {
@@ -291,7 +294,7 @@ if (shouldProvisionStorageKey(process.argv)) {
         const separator = content.trim() ? "\n" : "";
         const newContent = content.trimEnd() + separator + `STORAGE_ENCRYPTION_KEY=${key}`;
         writePrivateFile(envPath, newContent + "\n");
-        console.log(`  \x1b[2m✨ Generated STORAGE_ENCRYPTION_KEY in ${envPath}\x1b[0m`);
+        console.error(`  \x1b[2m✨ Generated STORAGE_ENCRYPTION_KEY in ${envPath}\x1b[0m`);
       }
 
       // Set in process.env for immediate use
