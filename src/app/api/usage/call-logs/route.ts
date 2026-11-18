@@ -87,6 +87,12 @@ export function rowMatchesFilter(row: any, filter: Record<string, any>): boolean
   ) {
     return false;
   }
+  if (
+    filter.clientSessionId &&
+    !matchesSearch(row?.clientSessionId || "", String(filter.clientSessionId))
+  ) {
+    return false;
+  }
   if (filter.search) {
     const term = String(filter.search);
     const haystack = [
@@ -241,6 +247,8 @@ export async function GET(request: Request) {
     if (searchParams.get("combo")) filter.combo = searchParams.get("combo");
     if (searchParams.get("search")) filter.search = searchParams.get("search");
     if (searchParams.get("correlationId")) filter.correlationId = searchParams.get("correlationId");
+    if (searchParams.get("clientSessionId"))
+      filter.clientSessionId = searchParams.get("clientSessionId");
     if (searchParams.get("limit")) filter.limit = parseInt(searchParams.get("limit"));
     if (searchParams.get("offset")) filter.offset = parseInt(searchParams.get("offset"));
     // Home Recent Requests feed sets excludeTests=1 so connection-test probe rows

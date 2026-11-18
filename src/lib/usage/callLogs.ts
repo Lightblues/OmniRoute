@@ -428,6 +428,7 @@ function mapSummaryRow(row: CallLogSummaryRow) {
     correlationId: row.correlation_id || null,
     modelPinned: toNumber(row.model_pinned) === 1,
     sessionTag: row.session_tag || null,
+    clientSessionId: (row as { client_session_id?: string | null }).client_session_id || null,
     resilienceActions: parseResilienceActions(row.resilience_actions ?? null),
   };
 }
@@ -941,6 +942,13 @@ export async function getCallLogs(filter: any = {}) {
     params.apiKeyQ = `%${filter.apiKey}%`;
   }
   pushLikeFilter(conditions, params, "correlation_id", "correlationId", filter.correlationId);
+  pushLikeFilter(
+    conditions,
+    params,
+    "client_session_id",
+    "clientSessionId",
+    filter.clientSessionId
+  );
   pushLikeFilter(conditions, params, "session_tag", "sessionTag", filter.sessionTag);
   if (filter.combo) {
     conditions.push("cl.combo_name IS NOT NULL");

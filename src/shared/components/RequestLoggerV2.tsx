@@ -105,10 +105,11 @@ export interface RequestLoggerV2Handle {
 type RequestLoggerV2InitialProps = {
   initialSelectedId?: string;
   initialCorrelationId?: string;
+  initialClientSessionId?: string;
 };
 const RequestLoggerV2 = forwardRef<RequestLoggerV2Handle, RequestLoggerV2InitialProps>(
   (props, ref) => {
-    const { initialSelectedId, initialCorrelationId } = props;
+    const { initialSelectedId, initialCorrelationId, initialClientSessionId } = props;
     const t = useTranslations("requestLogger");
     const tCache = useTranslations("cache");
     const { emailsVisible } = useEmailPrivacyStore();
@@ -160,6 +161,9 @@ const RequestLoggerV2 = forwardRef<RequestLoggerV2Handle, RequestLoggerV2Initial
     const [selectedLog, setSelectedLog] = useState(null);
     const [correlationIdFilter, setCorrelationIdFilter] = useState(
       () => initialCorrelationId ?? ""
+    );
+    const [clientSessionIdFilter, setClientSessionIdFilter] = useState(
+      () => initialClientSessionId ?? ""
     );
     const [hoveredCid, setHoveredCid] = useState<string | null>(null);
     const [groupedView, setGroupedView] = useState(false);
@@ -268,6 +272,7 @@ const RequestLoggerV2 = forwardRef<RequestLoggerV2Handle, RequestLoggerV2Initial
           if (selectedAccount) params.set("account", selectedAccount);
           if (selectedApiKey) params.set("apiKey", selectedApiKey);
           if (correlationIdFilter) params.set("correlationId", correlationIdFilter);
+          if (clientSessionIdFilter) params.set("clientSessionId", clientSessionIdFilter);
           params.set("limit", String(limit));
 
           const res = await fetch(`/api/usage/call-logs?${params}`);
@@ -298,6 +303,7 @@ const RequestLoggerV2 = forwardRef<RequestLoggerV2Handle, RequestLoggerV2Initial
         selectedProvider,
         selectedApiKey,
         correlationIdFilter,
+        clientSessionIdFilter,
         limit,
       ]
     );
@@ -957,6 +963,20 @@ const RequestLoggerV2 = forwardRef<RequestLoggerV2Handle, RequestLoggerV2Initial
               placeholder={t("correlationId")}
               value={correlationIdFilter}
               onChange={(e) => setCorrelationIdFilter(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 rounded-lg bg-bg-subtle border border-border text-sm text-text-primary font-mono placeholder:text-text-muted focus:outline-none focus:border-primary"
+            />
+          </div>
+
+          {/* Client Session ID Filter */}
+          <div className="min-w-[180px] relative">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[16px]">
+              device_hub
+            </span>
+            <input
+              type="text"
+              placeholder="session id"
+              value={clientSessionIdFilter}
+              onChange={(e) => setClientSessionIdFilter(e.target.value)}
               className="w-full pl-9 pr-3 py-2 rounded-lg bg-bg-subtle border border-border text-sm text-text-primary font-mono placeholder:text-text-muted focus:outline-none focus:border-primary"
             />
           </div>
