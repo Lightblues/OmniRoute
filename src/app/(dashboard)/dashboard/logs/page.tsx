@@ -41,7 +41,6 @@ function LogsPageContent() {
   // effect — mirrored from initialId on purpose.
   const [initialId] = useState(() => searchParams.get("id"));
   const [initialCorrelationId] = useState(() => searchParams.get("correlationId"));
-  const [initialClientSessionId] = useState(() => searchParams.get("clientSessionId"));
 
   const [showExport, setShowExport] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -254,7 +253,6 @@ function LogsPageContent() {
           ref={requestLoggerRef}
           initialSelectedId={initialId}
           initialCorrelationId={initialCorrelationId}
-          initialClientSessionId={initialClientSessionId}
         />
       </div>
 
